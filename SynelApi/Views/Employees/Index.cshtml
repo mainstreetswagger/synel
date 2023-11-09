@@ -1,0 +1,126 @@
+﻿@model IEnumerable<SynelApi.Dtos.EmployeeData>
+
+@{
+    ViewData["Title"] = "View";
+    <script src="/js/employee-table.js"></script>
+    <link rel="stylesheet" href="/css/employee-table.css"/>
+}
+
+<h1>View</h1>
+
+<div>
+    <div style="display: flex;flex-direction: row;justify-content: space-between;">
+        <div id="sd">
+            <form method="post" enctype="multipart/form-data" asp-controller="people" asp-action="create">
+                <div>
+                    <label for="file">Choose file to upload</label>
+                    <input type="file" name="file" accept=".xml, .csv" />
+                </div>
+                <div>
+                    <input type="submit" value="Submit" />
+                </div>
+            </form>
+        </div>
+        <div>
+            <form method="get" asp-controller="people" asp-action="index">
+                <p>
+                    Search: <input type="text" name="searchString" />
+                    <input type="submit" value="Filter" />
+                </p>
+            </form>
+        </div>
+    </div>
+    <div>
+        @if (int.Parse(@ViewData["saved"].ToString()) > 0)
+        {
+            <div><p>Saved: <strong>@ViewData["saved"]</strong> new people are successfully saved.</p></div>
+        }
+        @if (int.Parse(@ViewData["found"].ToString()) > 0)
+        {
+            <div><p>Not Saved: <strong>@ViewData["found"]</strong> people are not saved.</p></div>
+        }
+        <table id="sortable">
+            <thead>
+                <tr>
+                    <th onclick="sortBy(0)">
+                        @Html.DisplayNameFor(model => model.PayrollNumber)
+                    </th>
+                    <th onclick="sortBy(1)">
+                        @Html.DisplayNameFor(model => model.Forename)
+                    </th>
+                    <th onclick="sortBy(2)">
+                        @Html.DisplayNameFor(model => model.Surename)
+                    </th>
+                    <th onclick="sortBy(3)">
+                        @Html.DisplayNameFor(model => model.DOB)
+                    </th>
+                    <th onclick="sortBy(4)">
+                        @Html.DisplayNameFor(model => model.Telephone)
+                    </th>
+                    <th onclick="sortBy(5)">
+                        @Html.DisplayNameFor(model => model.Mobile)
+                    </th >
+                    <th onclick="sortBy(6)">
+                        @Html.DisplayNameFor(model => model.Address)
+                    </th>
+                    <th onclick="sortBy(7)">
+                        @Html.DisplayNameFor(model => model.Location)
+                    </th>
+                    <th onclick="sortBy(8)">
+                        @Html.DisplayNameFor(model => model.Postcode)
+                    </th>
+                    <th onclick="sortBy(9)">
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th onclick="sortBy(10)">
+                        @Html.DisplayNameFor(model => model.StartDate)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PayrollNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Forename)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Surename)
+                        </td>
+                        <td>
+                            @item.DOB.ToShortDateString()
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Telephone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Mobile)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Location)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Postcode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @item.StartDate.ToShortDateString()
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", "People", new{payroll=item.PayrollNumber})
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

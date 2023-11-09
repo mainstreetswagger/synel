@@ -1,0 +1,11 @@
+﻿table {
+    text-align: left;
+}
+
+th, td {
+    padding: 4px 8px;
+}
+
+th {
+    cursor: pointer;
+}
